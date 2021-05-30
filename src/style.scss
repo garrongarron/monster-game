@@ -55,3 +55,44 @@
     font-family: 'gotic';
     padding-top: .5em;
 }
+
+
+/* Context menu */
+
+.display-context-menu {
+    background-color: gray;
+    position: fixed;
+    padding: .1em;
+    cursor: pointer;
+}
+
+.display-context-menu>div {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    padding: .2em .5em;
+}
+
+.display-context-menu>div:hover {
+    color: #ccc;
+}
+
+
+/* sound controlls*/
+
+.sound-control {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1em;
+    color: gray;
+    padding: 1em;
+    transition: all 1s;
+    cursor: pointer;
+}
+
+.sound-down:hover,
+.sound-up:hover {
+    color: red;
+}

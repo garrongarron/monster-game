@@ -5,43 +5,60 @@ class Sound {
         Object.keys(this.audioList).map(name => {
             let audio = document.createElement('audio')
             audio.src = this.audioList[name]
-            audio.volume = 1;
-            audio._volume = 1;
             document.body.appendChild(audio)
-            this.nodeList[name] = audio
+            this.nodeList[name] = {
+                nodeElement: audio,
+                _volume: 1
+            }
         })
+        this.generalVolume = 1
+    }
+    getRelativeVolume(name) {
+        return this.nodeList[name]._volume
+    }
+    setRelativeVolume(name, volume) {
+        this.nodeList[name]._volume = volume
+        this.setGeneralVolumen(this.generalVolume)
+    }
+    getGeneralVolume() {
+        return this.generalVolume
     }
 
     play(name) {
-        this.nodeList[name].pause();
-        this.nodeList[name].currentTime = 0;
-        this.nodeList[name].play()
+        this.nodeList[name].nodeElement.pause();
+        this.nodeList[name].nodeElement.currentTime = 0;
+        this.nodeList[name].nodeElement.play()
     }
 
     setVolume(sound, value) {
-        this.nodeList[sound].volume = value;
+        this.nodeList[sound]._volume = value;
+        this.setGeneralVolumen(this.getGeneralVolume())
     }
 
-    updateGeneralVolumen(generalVolume) {
-        Object.keys(this.audioList).map(name => {
-            let audio = this.nodeList[name]
-            audio.volume = audio._volume * generalVolume;
+    setGeneralVolumen(generalVolume) {
+        this.generalVolume = (generalVolume > 1) ? 1 : generalVolume
+        this.generalVolume = (this.generalVolume < 0) ? 0 : this.generalVolume
+        Object.keys(this.nodeList).map(name => {
+            let vol = this.nodeList[name]._volume * this.generalVolume
+            this.nodeList[name].nodeElement.volume = vol;
+
         })
     }
 
     setAsLoop(name) {
-        this.nodeList[name].loop = true
+        this.nodeList[name].nodeElement.loop = true
     }
 
-    stop(name) {
-        this.nodeList[name].pause();
-        this.nodeList[name].currentTime = 0;
+    stop(name, flag) {
+        this.nodeList[name].nodeElement.pause();
+        if (flag) return
+        this.nodeList[name].nodeElement.currentTime = 0;
     }
 
     stopAll(name) {
         Object.keys(this.audioList).map(name => {
-            this.nodeList[name].pause();
-            this.nodeList[name].currentTime = 0;
+            this.nodeList[name].nodeElement.pause();
+            this.nodeList[name].nodeElement.currentTime = 0;
         })
     }
 }

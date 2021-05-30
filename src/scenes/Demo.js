@@ -14,7 +14,8 @@ import cameraController from "../../src/engine/controllers/camera/CameraControll
 import keyListener from "../engine/basic/KeyListener.js";
 import eventBus from "../engine/basic/EventBus.js";
 import sounds from "../audio/Audios.js";
-
+import ContextMenu from '../engine/ui/ContextMenu.js'
+import displayContextMenuGame from "./DisplayContextMenuGame.js";
 
 class Demo extends MasterScene {
     constructor(instancename) {
@@ -33,6 +34,9 @@ class Demo extends MasterScene {
                 directionalLight.target.updateMatrixWorld();
             }
         }
+
+        let contextMenu = new ContextMenu(displayContextMenuGame)
+        contextMenu.open()
     }
     open() {
         machine.addCallback(this.callback);
@@ -57,7 +61,7 @@ class Demo extends MasterScene {
         scene.add(ocean)
         eventBus.suscribe('keyListener', (arr) => {
             if (arr[0] == 87 || arr[0] == 83) {
-                (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk')
+                (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
             }
         })
     }
