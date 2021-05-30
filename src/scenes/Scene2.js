@@ -19,6 +19,7 @@ import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
 import gamePlay from "./GamePlay.js";
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController.js";
+import gamePlay2 from "./GamePlay2.js";
 
 class Scene2 extends MasterScene {
     constructor(instancename) {
@@ -69,7 +70,7 @@ class Scene2 extends MasterScene {
             .then(mesh => {
                 this.mesh = mesh
                 cameraController.start(mesh)
-                    // gamePlay.open(mesh)
+                gamePlay2.open(mesh)
                 scene.add(mesh)
                 this.characterController = new CharacterController(settings)
                 this.characterController.setMesh(mesh)

@@ -3,6 +3,11 @@
     src: url("./fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf");
 }
 
+@font-face {
+    font-family: 'cursi';
+    src: url("./fonts/Kaushan_Script/KaushanScript-Regular.ttf");
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -122,4 +127,17 @@
 .fade-to-black {
     background-color: rgba(0, 0, 0, 1);
     transition: all 3s;
+}
+
+.display {
+    position: fixed;
+    right: 5vw;
+    top: 5vh;
+    padding: 30px;
+    width: 40vw;
+    height: 50vh;
+    // background-color: green;
+    font-family: 'cursi';
+    font-size: 30px;
+    color: yellow;
 }
