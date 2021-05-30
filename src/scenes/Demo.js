@@ -39,6 +39,7 @@ class Demo extends MasterScene {
         contextMenu.open()
     }
     open() {
+        sounds.setAsLoop('walk')
         machine.addCallback(this.callback);
         machine.on();
         keyListener.start()

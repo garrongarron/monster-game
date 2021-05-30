@@ -8,7 +8,8 @@ class Sound {
             document.body.appendChild(audio)
             this.nodeList[name] = {
                 nodeElement: audio,
-                _volume: 1
+                _volume: 1,
+                loop: false
             }
         })
         this.generalVolume = 1
@@ -25,6 +26,9 @@ class Sound {
     }
 
     play(name) {
+        if (this.nodeList[name].loop) {
+            this.nodeList[name].nodeElement.loop = true
+        }
         this.nodeList[name].nodeElement.pause();
         this.nodeList[name].nodeElement.currentTime = 0;
         this.nodeList[name].nodeElement.play()
@@ -46,7 +50,7 @@ class Sound {
     }
 
     setAsLoop(name) {
-        this.nodeList[name].nodeElement.loop = true
+        this.nodeList[name].loop = true
     }
 
     stop(name, flag) {

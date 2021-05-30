@@ -4,6 +4,7 @@ import sceneList from "./SceneList";
 import cache from '../engine/basic/Cache'
 import sounds from "../audio/Audios";
 import icon from "../engine/ui/Icons";
+import gamePlay from "./GamePlay";
 
 
 class Landing extends MasterScene {
@@ -25,12 +26,10 @@ class Landing extends MasterScene {
         this.landing.appendChild(this.samuGames)
         this.samuGames.addEventListener('click', () => {
             this.samuGames.classList.add('hide')
-            sounds.setAsLoop('walk')
             sounds.setAsLoop('intro')
             sounds.play('intro')
+            sounds.setRelativeVolume('intro', .3)
         })
-
-
 
         let container = document.createElement('div')
         let soundDown = icon.get('ImVolumeLow')
@@ -50,7 +49,7 @@ class Landing extends MasterScene {
         })
 
         document.body.appendChild(container)
-
+        gamePlay.open()
     }
     open(scenehandler) {
         this.scenehandler = scenehandler
