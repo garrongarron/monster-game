@@ -71,7 +71,7 @@ class CameraController {
                         this.target.position.y, 
                         this.target.position.z)
                     */
-                displacementCamController.run(rotationWithGap2)
+                    // displacementCamController.run(rotationWithGap2)
             }
         }
     }
