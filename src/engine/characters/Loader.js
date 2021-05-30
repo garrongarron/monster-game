@@ -6,7 +6,6 @@ class Loader {
         let loader = new FBXLoader();
         let promises = []
         let animations = []
-
         let p1 = new Promise((res, rej) => {
             loader.load(name,
                 function(object) {
@@ -22,6 +21,7 @@ class Loader {
                     res(object)
                 })
         })
+
         urlList.forEach((element, index) => {
             promises[index] = new Promise((resolve, reject) => {
                 loader.load(urlList[index],

@@ -6,4 +6,4 @@ import sceneHandlerObj from './scenes/SceneHandlerObj';
 
 let scenehandler = new SceneHandler(sceneList)
 sceneHandlerObj.set(scenehandler)
-scenehandler.goTo(sceneList.landing)
+scenehandler.goTo(sceneList.scene3)

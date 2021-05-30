@@ -44,7 +44,7 @@ class GamePlay2 {
             this.showMessage(8)
             setTimeout(() => {
                 fadeHandler.fadeToBlack().then(a => {
-                    sceneHandlerObj.get().goTo(sceneList.landing)
+                    sceneHandlerObj.get().goTo(sceneList.scene3)
                     fadeHandler.fadeFromBlack().then(a => {})
                 })
             }, 6 * 1000);

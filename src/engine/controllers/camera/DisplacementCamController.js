@@ -9,6 +9,9 @@ class DisplacementCamController {
         this.flag = false
         this.lastN = []
     }
+    setSpeed(speed) {
+        this.speed = speed
+    }
 
     start() {
         this.flag = true

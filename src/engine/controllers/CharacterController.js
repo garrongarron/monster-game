@@ -5,7 +5,7 @@ import machine from "../basic/Machine.js";
 import Modes from './Modes.js'
 
 class CharacterController {
-    constructor(settings) {
+    constructor(settings, directionController) {
         this.settings = settings
         this.modes = null
         this.modeController = new FiniteStateMachine('normal', settings)
@@ -20,7 +20,7 @@ class CharacterController {
         eventBus.suscribe('keyListener', (arr) => {
             if (!this.flag) return
             this.mode = this.modeController.run(arr)
-            this.direction = directionWSController.run(arr)
+            this.direction = directionController.run(arr)
         })
     }
 

@@ -20,6 +20,7 @@ import displayContextMenuGame from "./DisplayContextMenuGame.js";
 import gamePlay from "./GamePlay.js";
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController.js";
 import gamePlay2 from "./GamePlay2.js";
+import directionWSController from "../engine/controllers/DirectionWSController.js";
 
 class Scene2 extends MasterScene {
     constructor(instancename) {
@@ -72,7 +73,7 @@ class Scene2 extends MasterScene {
                 cameraController.start(mesh)
                 gamePlay2.open(mesh)
                 scene.add(mesh)
-                this.characterController = new CharacterController(settings)
+                this.characterController = new CharacterController(settings, directionWSController)
                 this.characterController.setMesh(mesh)
                 this.characterController.start()
                 displacementCamController.setTarget(mesh)

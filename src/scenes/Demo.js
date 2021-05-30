@@ -18,6 +18,7 @@ import sounds from "../audio/Audios.js";
 import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
 import gamePlay from "./GamePlay.js";
+import directionWSController from "../engine/controllers/DirectionWSController.js";
 
 class Demo extends MasterScene {
     constructor(instancename) {
@@ -69,7 +70,7 @@ class Demo extends MasterScene {
                     // cameraController.start(mesh)
                 gamePlay.open(mesh)
                 scene.add(mesh)
-                this.characterController = new CharacterController(settings)
+                this.characterController = new CharacterController(settings, directionWSController)
                 this.characterController.setMesh(mesh)
                 this.characterController.start()
             })

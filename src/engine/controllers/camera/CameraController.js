@@ -10,7 +10,7 @@ class CameraController {
     constructor() {
         this.interpolation = .8
         this.rotation = 0
-        this.gap = 40
+        this.gap = 10
         this.rotationWithGap = 0
         this.radio = 2
         this.rotationSpeed = 50
