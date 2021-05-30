@@ -99,9 +99,27 @@
 
 .message-container {
     position: fixed;
-    right: 2em;
-    top: 2em;
+    right: 0;
+    top: 0;
     font-family: 'gotic';
     font-size: 5em;
-    color: red;
+    color: yellow;
+    text-shadow: 2px 2px 4px black;
+    padding: 1em;
+}
+
+.fade-node {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.fade-to-black {
+    background-color: rgba(0, 0, 0, 1);
+    transition: all 3s;
 }

@@ -44,7 +44,7 @@ class Sound {
         this.generalVolume = (this.generalVolume < 0) ? 0 : this.generalVolume
         Object.keys(this.nodeList).map(name => {
             let vol = this.nodeList[name]._volume * this.generalVolume
-            this.nodeList[name].nodeElement.volume = vol;
+            this.nodeList[name].nodeElement.volume = (vol > 1) ? 1 : (vol < 0) ? 0 : vol;
 
         })
     }

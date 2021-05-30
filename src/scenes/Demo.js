@@ -3,6 +3,7 @@ import machine from "../../src/engine/basic/Machine.js"
 import scene from "../../src/engine/basic/Scene.js";
 import cube from "../../src/engine/object/Box.js";
 import ocean from "../../src/engine/object/Ocean.js";
+import land from "../../src/engine/object/Land";
 import camera from "../../src/engine/basic/Camera.js";
 import MasterScene from "../../src/engine/scenes/MasterScene.js";
 import directionalLight, { ambientLight, helper, hemiLight } from "../../src/engine/basic/Light.js";
@@ -16,6 +17,7 @@ import eventBus from "../engine/basic/EventBus.js";
 import sounds from "../audio/Audios.js";
 import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
+import gamePlay from "./GamePlay.js";
 
 class Demo extends MasterScene {
     constructor(instancename) {
@@ -23,6 +25,7 @@ class Demo extends MasterScene {
         this.mesh = null
         this.callback = () => {
             renderer.render(scene, camera);
+
             if (this.mesh) {
                 directionalLight.position.x = this.mesh.position.x
                 directionalLight.position.y = this.mesh.position.y + 2
@@ -40,6 +43,7 @@ class Demo extends MasterScene {
     }
     open() {
         sounds.setAsLoop('walk')
+        sounds.setRelativeVolume('walk', .3)
         machine.addCallback(this.callback);
         machine.on();
         keyListener.start()
@@ -50,16 +54,26 @@ class Demo extends MasterScene {
         scene.add(hemiLight);
         scene.add(cube)
         cube.position.y = 0
+        cube.position.z = 14
+        cube.position.x = .5
+        let cube2 = cube.clone()
+        scene.add(cube2)
+        cube2.position.y = 0
+        cube2.position.z = 14
+        cube2.position.x = -.5
+
+
         maw.getObject()
             .then(mesh => {
                 this.mesh = mesh
-                cameraController.start(mesh)
+                    // cameraController.start(mesh)
+                gamePlay.open(mesh)
                 scene.add(mesh)
-                let characterController = new CharacterController(settings)
-                characterController.setMesh(mesh)
-                characterController.start()
+                this.characterController = new CharacterController(settings)
+                this.characterController.setMesh(mesh)
+                this.characterController.start()
             })
-        scene.add(ocean)
+        scene.add(land)
         eventBus.suscribe('keyListener', (arr) => {
             if (arr[0] == 87 || arr[0] == 83) {
                 (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
@@ -67,9 +81,9 @@ class Demo extends MasterScene {
         })
     }
     close() {
-        characterController.stop()
+        this.characterController.stop()
         machine.removeCallback(this.callback);
-        machine.off();
+        machine.pause();
         resize.close()
         scene.remove(directionalLight)
         scene.remove(ambientLight)

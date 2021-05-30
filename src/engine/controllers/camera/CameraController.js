@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import mouse from '../../basic/Mouse.js'
 import machine from '../../basic/Machine.js'
 import camera from '../../basic/Camera.js'
-import displacementCamController from './DisplacementCamController.js';
 import canvas from '../../basic/Canvas.js';
 import { MathUtils } from 'three'
 
@@ -81,8 +80,6 @@ class CameraController {
         mouse.setCanvas(canvas)
         mouse.start()
         this.target = t
-        displacementCamController.setTarget(t)
-        displacementCamController.start()
         machine.addCallback(this.controller)
     }
     stop() {

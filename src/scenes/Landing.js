@@ -4,7 +4,7 @@ import sceneList from "./SceneList";
 import cache from '../engine/basic/Cache'
 import sounds from "../audio/Audios";
 import icon from "../engine/ui/Icons";
-import gamePlay from "./GamePlay";
+import sceneHandlerObj from "./SceneHandlerObj";
 
 
 class Landing extends MasterScene {
@@ -18,7 +18,7 @@ class Landing extends MasterScene {
         this.btn.classList.add('play-now')
         this.landing.appendChild(this.btn)
         this.btn.addEventListener('click', () => {
-            this.scenehandler.goTo(sceneList.demo)
+            sceneHandlerObj.get().goTo(sceneList.demo)
         })
         this.samuGames = document.createElement('div')
         this.samuGames.innerHTML = "Samu Games"
@@ -27,8 +27,9 @@ class Landing extends MasterScene {
         this.samuGames.addEventListener('click', () => {
             this.samuGames.classList.add('hide')
             sounds.setAsLoop('intro')
+            sounds.setRelativeVolume('intro', .1)
             sounds.play('intro')
-            sounds.setRelativeVolume('intro', .3)
+
         })
 
         let container = document.createElement('div')
@@ -36,7 +37,7 @@ class Landing extends MasterScene {
         soundDown.classList.add('sound-down')
         container.appendChild(soundDown)
         soundDown.addEventListener('click', () => {
-            let vol = sounds.getRelativeVolume('intro') - .1
+            let vol = sounds.getRelativeVolume('intro') - .05
             sounds.setRelativeVolume('intro', vol)
         })
         container.classList.add('sound-control')
@@ -44,15 +45,13 @@ class Landing extends MasterScene {
         soundUp.classList.add('sound-up')
         container.appendChild(soundUp)
         soundUp.addEventListener('click', () => {
-            let vol = sounds.getRelativeVolume('intro') + .1
+            let vol = sounds.getRelativeVolume('intro') + .05
             sounds.setRelativeVolume('intro', vol)
         })
 
         document.body.appendChild(container)
-        gamePlay.open()
     }
-    open(scenehandler) {
-        this.scenehandler = scenehandler
+    open() {
         document.body.appendChild(this.landing)
     }
     close() {
