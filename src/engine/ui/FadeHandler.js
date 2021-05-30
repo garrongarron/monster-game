@@ -23,7 +23,7 @@ class FadeHandler {
             setTimeout(() => {
                 // this.fadeNode.classList.remove('fade-to-black')
                 // this.fadeNode.classList.remove('fade-from-black')
-                // this.stop()
+                this.stop()
                 res(true)
             }, time || 3000);
         })

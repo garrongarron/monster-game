@@ -5,6 +5,7 @@ import cache from '../engine/basic/Cache'
 import sounds from "../audio/Audios";
 import icon from "../engine/ui/Icons";
 import sceneHandlerObj from "./SceneHandlerObj";
+import fadeHandler from "../engine/ui/FadeHandler";
 
 
 class Landing extends MasterScene {
@@ -18,18 +19,26 @@ class Landing extends MasterScene {
         this.btn.classList.add('play-now')
         this.landing.appendChild(this.btn)
         this.btn.addEventListener('click', () => {
-            sceneHandlerObj.get().goTo(sceneList.demo)
+            fadeHandler.fadeToBlack().then(a => {
+                sceneHandlerObj.get().goTo(sceneList.demo)
+                setTimeout(() => {
+                    fadeHandler.fadeFromBlack()
+                }, 100);
+            })
+
         })
         this.samuGames = document.createElement('div')
         this.samuGames.innerHTML = "Samu Games"
         this.samuGames.classList.add('samu-games')
         this.landing.appendChild(this.samuGames)
         this.samuGames.addEventListener('click', () => {
-            this.samuGames.classList.add('hide')
-            sounds.setAsLoop('intro')
-            sounds.setRelativeVolume('intro', .1)
-            sounds.play('intro')
-
+            fadeHandler.fadeToBlack().then(a => {
+                this.samuGames.classList.add('hide')
+                sounds.setAsLoop('intro')
+                sounds.setRelativeVolume('intro', .1)
+                sounds.play('intro')
+                fadeHandler.fadeFromBlack()
+            })
         })
 
         let container = document.createElement('div')
