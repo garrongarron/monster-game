@@ -19,6 +19,9 @@ class NPC {
             this.messageContainer.classList.add('message-container')
             document.body.appendChild(this.messageContainer)
         }
+        this.credits = document.createElement('div')
+        this.credits.innerText = 'by @samugarrondev'
+        this.credits.classList.add('credits')
     }
     showMessage(time) {
         console.log(this.messages);
@@ -26,6 +29,12 @@ class NPC {
         setTimeout(() => {
             this.messageContainer.innerText = ''
         }, 1000 * time);
+    }
+    showCredits() {
+        document.body.appendChild(this.credits)
+        setTimeout(() => {
+            this.credits.classList.add('fadeIn')
+        }, 1000);
     }
     start() {
         this.animator.start()
@@ -42,6 +51,10 @@ class NPC {
         setTimeout(() => {
             this.showMessage(50)
         }, 1000 * 31);
+
+        setTimeout(() => {
+            this.showCredits()
+        }, 1000 * 40);
         this.again()
         eventBus.suscribe('keyListener', (arr) => {
             if (arr[0] == 32 && arr[1] == true) {
@@ -51,7 +64,7 @@ class NPC {
                     sounds.stop('walk', true)
                     setTimeout(() => {
                         this.animator.stop()
-                    }, 2900);
+                    }, 2700);
                     clearTimeout(this.t)
                     this.flag = true
                 }, 1200);

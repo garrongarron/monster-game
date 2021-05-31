@@ -78,7 +78,7 @@ class Scene3 extends MasterScene {
         camera.position.set(0, -2, -50)
         erika.getObject().then(mesh => {
             this.mesh = mesh
-            this.mesh.position.z = -10
+            this.mesh.position.z = -12
             scene.add(mesh)
             this.characterControllerErika = new CharacterController(settingsErica, directionWSSpaceController)
             this.characterControllerErika.setMesh(mesh)
