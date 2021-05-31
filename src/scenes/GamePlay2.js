@@ -9,16 +9,11 @@ class GamePlay2 {
             "Click to move the camera",
             "Everyone deserve a second chance",
             "A monster also was a kid",
-            "Bus some people just hate ",
+            "But, some people just hate...",
             "... and attack from behind",
             "Who is the mosnter?",
         ]
-        this.messageContainer = document.querySelector('.message-container')
-        if (!this.messageContainer) {
-            this.messageContainer = document.createElement('div')
-            this.messageContainer.classList.add('message-container')
-            document.body.appendChild(this.messageContainer)
-        }
+
         this.display = document.createElement('div')
         this.display.classList.add('display')
         document.body.appendChild(this.display)

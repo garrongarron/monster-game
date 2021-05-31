@@ -25,6 +25,7 @@ import directionWSController from "../engine/controllers/DirectionWSController.j
 class Scene2 extends MasterScene {
     constructor(instancename) {
         super(instancename)
+        this.openFlag = false
         this.mesh = null
         this.callback = () => {
             renderer.render(scene, camera);
@@ -46,6 +47,7 @@ class Scene2 extends MasterScene {
         contextMenu.open()
     }
     open() {
+        this.openFlag = true
         sounds.setAsLoop('walk')
         sounds.setRelativeVolume('walk', .3)
         machine.addCallback(this.callback);
@@ -81,12 +83,13 @@ class Scene2 extends MasterScene {
             })
         scene.add(land)
         eventBus.suscribe('keyListener', (arr) => {
-            if (arr[0] == 87 || arr[0] == 83) {
+            if (this.openFlag && (arr[0] == 87 || arr[0] == 83)) {
                 (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
             }
         })
     }
     close() {
+        this.openFlag = false
         this.characterController.stop()
         machine.removeCallback(this.callback);
         machine.pause();

@@ -75,10 +75,10 @@ class Scene3 extends MasterScene {
         cube2.position.y = 0
         cube2.position.z = 14
         cube2.position.x = -.5
-        camera.position.set(0, -2, -5)
+        camera.position.set(0, -2, -50)
         erika.getObject().then(mesh => {
             this.mesh = mesh
-            this.mesh.position.z = -1
+            this.mesh.position.z = -10
             scene.add(mesh)
             this.characterControllerErika = new CharacterController(settingsErica, directionWSSpaceController)
             this.characterControllerErika.setMesh(mesh)
@@ -94,7 +94,7 @@ class Scene3 extends MasterScene {
         maw.getObject().then(mesh => {
             this.mesh2 = mesh
             scene.add(mesh)
-            this.mesh2.position.z = 1
+            this.mesh2.position.z = -7
             this.npc = new NPC(this.mesh2)
             this.npc.start()
         })

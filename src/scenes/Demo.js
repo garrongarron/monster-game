@@ -24,6 +24,7 @@ class Demo extends MasterScene {
     constructor(instancename) {
         super(instancename)
         this.mesh = null
+        this.openFlag = false
         this.callback = () => {
             renderer.render(scene, camera);
 
@@ -43,6 +44,7 @@ class Demo extends MasterScene {
         contextMenu.open()
     }
     open() {
+        this.openFlag = true
         sounds.setAsLoop('walk')
         sounds.setRelativeVolume('walk', .3)
         machine.addCallback(this.callback);
@@ -76,12 +78,13 @@ class Demo extends MasterScene {
             })
         scene.add(land)
         eventBus.suscribe('keyListener', (arr) => {
-            if (arr[0] == 87 || arr[0] == 83) {
+            if (this.openFlag && (arr[0] == 87 || arr[0] == 83)) {
                 (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
             }
         })
     }
     close() {
+        this.openFlag = false
         this.characterController.stop()
         machine.removeCallback(this.callback);
         machine.pause();

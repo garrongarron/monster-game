@@ -8,6 +8,24 @@ class NPC {
         this.animator = new Animator(npc)
         this.t = null
         this.flag = false
+        this.messages = [
+            "Press Space to Shoot",
+            "Death isn't the end",
+            "Who is the monster now?",
+        ]
+        this.messageContainer = document.querySelector('.message-container')
+        if (!this.messageContainer) {
+            this.messageContainer = document.createElement('div')
+            this.messageContainer.classList.add('message-container')
+            document.body.appendChild(this.messageContainer)
+        }
+    }
+    showMessage(time) {
+        console.log(this.messages);
+        this.messageContainer.innerText = this.messages.shift()
+        setTimeout(() => {
+            this.messageContainer.innerText = ''
+        }, 1000 * time);
     }
     start() {
         this.animator.start()
@@ -15,6 +33,15 @@ class NPC {
             if (this.flag) return
             this.npc.position.z += 0.03
         })
+        setTimeout(() => {
+            this.showMessage(5)
+        }, 1000 * 15);
+        setTimeout(() => {
+            this.showMessage(4)
+        }, 1000 * 25);
+        setTimeout(() => {
+            this.showMessage(50)
+        }, 1000 * 31);
         this.again()
         eventBus.suscribe('keyListener', (arr) => {
             if (arr[0] == 32 && arr[1] == true) {
