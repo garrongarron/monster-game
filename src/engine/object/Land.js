@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-const boxWidth = 100;
+const boxWidth = 400;
 const boxHeight = .1;
-const boxDepth = 100;
+const boxDepth = 400;
 const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
 const material = new THREE.MeshStandardMaterial({ color: 0x641E16 });

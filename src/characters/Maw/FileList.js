@@ -46,6 +46,7 @@ let fileList = {
     // "44": "unarmed turn right 90.fbx",
     // "45": "unarmed walk back.fbx",
     // "46": "unarmed walk forward.fbx",
+    "45": "Standing Death Forward 01.fbx",
     'maw': 'Maw.fbx'
 }
 export default fileList

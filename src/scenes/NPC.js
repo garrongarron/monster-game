@@ -1,4 +1,5 @@
 import sounds from '../audio/Audios.js'
+import eventBus from '../engine/basic/EventBus.js'
 import machine from '../engine/basic/Machine.js'
 import Animator from '../engine/characters/Animator.js'
 class NPC {
@@ -15,6 +16,20 @@ class NPC {
             this.npc.position.z += 0.03
         })
         this.again()
+        eventBus.suscribe('keyListener', (arr) => {
+            if (arr[0] == 32 && arr[1] == true) {
+                sounds.stop('walk', true)
+                setTimeout(() => {
+                    this.animator.action(45, 1, false)
+                    sounds.stop('walk', true)
+                    setTimeout(() => {
+                        this.animator.stop()
+                    }, 2900);
+                    clearTimeout(this.t)
+                    this.flag = true
+                }, 1200);
+            }
+        })
     }
     again() {
         this.flag = !this.flag

@@ -75,8 +75,10 @@ class Scene3 extends MasterScene {
         cube2.position.y = 0
         cube2.position.z = 14
         cube2.position.x = -.5
+        camera.position.set(0, -2, -5)
         erika.getObject().then(mesh => {
             this.mesh = mesh
+            this.mesh.position.z = -1
             scene.add(mesh)
             this.characterControllerErika = new CharacterController(settingsErica, directionWSSpaceController)
             this.characterControllerErika.setMesh(mesh)
