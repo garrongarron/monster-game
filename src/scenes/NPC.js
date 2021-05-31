@@ -1,5 +1,6 @@
 import sounds from '../audio/Audios.js'
 import eventBus from '../engine/basic/EventBus.js'
+import keyListener from '../engine/basic/KeyListener.js'
 import machine from '../engine/basic/Machine.js'
 import Animator from '../engine/characters/Animator.js'
 class NPC {
@@ -8,6 +9,7 @@ class NPC {
         this.animator = new Animator(npc)
         this.t = null
         this.flag = false
+        this.shootFlag = false
         this.messages = [
             "Press Space to Shoot",
             "Death isn't the end",
@@ -42,19 +44,23 @@ class NPC {
             if (this.flag) return
             this.npc.position.z += 0.03
         })
-        setTimeout(() => {
-            this.showMessage(5)
-        }, 1000 * 15);
-        setTimeout(() => {
-            this.showMessage(4)
-        }, 1000 * 25);
-        setTimeout(() => {
-            this.showMessage(50)
-        }, 1000 * 31);
 
-        setTimeout(() => {
-            this.showCredits()
-        }, 1000 * 40);
+        let timer
+        let shooted = false
+        timer = setTimeout(() => {
+            shooted = true
+            this.messageContainer.innerText = this.messages.shift()
+            this.shoot()
+        }, 1000 * 15);
+
+        document.body.addEventListener('keydown', (e) => {
+            if (shooted) return
+            if (e.keyCode == 32) {
+                this.messages.shift()
+                this.shoot()
+                clearTimeout(timer)
+            }
+        })
         this.again()
         eventBus.suscribe('keyListener', (arr) => {
             if (arr[0] == 32 && arr[1] == true) {
@@ -62,6 +68,7 @@ class NPC {
                 setTimeout(() => {
                     this.animator.action(45, 1, false)
                     sounds.stop('walk', true)
+                    sounds.play('arrow')
                     setTimeout(() => {
                         this.animator.stop()
                     }, 2700);
@@ -71,6 +78,26 @@ class NPC {
             }
         })
     }
+    shoot() {
+        machine.addCallback(() => {
+            if (!this.shootFlag) {
+                setTimeout(() => {
+                    this.messageContainer.innerText = ''
+                }, 2000);
+                this.shootFlag = true
+                setTimeout(() => {
+                    this.showMessage(4)
+                }, 1000 * 6);
+                setTimeout(() => {
+                    this.showMessage(50)
+                }, 1000 * 12);
+                setTimeout(() => {
+                    this.showCredits()
+                }, 1000 * 20);
+            }
+        })
+    }
+
     again() {
         this.flag = !this.flag
         if (this.flag) {

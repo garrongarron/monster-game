@@ -26,6 +26,7 @@ class Sound {
     }
 
     play(name) {
+        console.log(name);
         if (this.nodeList[name].loop) {
             this.nodeList[name].nodeElement.loop = true
         }
