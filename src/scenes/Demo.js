@@ -20,6 +20,10 @@ import displayContextMenuGame from "./DisplayContextMenuGame.js";
 import gamePlay from "./GamePlay.js";
 import directionWSController from "../engine/controllers/DirectionWSController.js";
 import skyTexture from "./SkyTexture.js";
+import sphere from "../engine/object/Sphere.js";
+import blend from "../engine/noise/Blend.js";
+import ChunkManager from "../engine/noise/ChunkManager.js";
+
 
 class Demo extends MasterScene {
     constructor(instancename) {
@@ -38,13 +42,21 @@ class Demo extends MasterScene {
                     this.mesh.position.y,
                     this.mesh.position.z - 2);
                 directionalLight.target.updateMatrixWorld();
+                camera.position.y = this.mesh.position.y + 1
             }
         }
 
         let contextMenu = new ContextMenu(displayContextMenuGame)
         contextMenu.open()
+
+
+        blend.then(t => {
+            scene.add(sphere)
+            this.chunkManager = new ChunkManager(sphere, 1000, t)
+        })
     }
     open() {
+
         this.openFlag = true
         sounds.setAsLoop('walk')
         sounds.setRelativeVolume('walk', .3)
@@ -67,19 +79,22 @@ class Demo extends MasterScene {
         cube2.position.x = -.5
 
         scene.background = skyTexture;
-        maw.getObject()
-            .then(mesh => {
-                this.mesh = mesh
-                    // cameraController.start(mesh)
-                gamePlay.open(mesh)
-                scene.add(mesh)
-                this.characterController = new CharacterController(settings, directionWSController)
-                this.characterController.setMesh(mesh)
-                this.characterController.start()
-            })
-        scene.add(land)
+        maw.getObject().then(mesh => {
+            this.mesh = mesh
+
+            // cameraController.start(mesh)
+            gamePlay.open(mesh)
+            scene.add(mesh)
+            this.characterController = new CharacterController(settings, directionWSController)
+            this.characterController.setMesh(mesh)
+            this.characterController.start()
+            scene.add(sphere)
+
+            this.chunkManager.setCharacter(mesh)
+        });
+        // scene.add(land)
         eventBus.suscribe('keyListener', (arr) => {
-            if (this.openFlag && (arr[0] == 87 || arr[0] == 83)) {
+            if (this.openFlag && (arr[0] == 87)) {
                 (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
             }
         })

@@ -2,8 +2,8 @@ import renderer from "../engine/basic/Renderer.js"
 import machine from "../engine/basic/Machine.js"
 import scene from "../engine/basic/Scene.js";
 import cube from "../engine/object/Box.js";
-import ocean from "../engine/object/Ocean.js";
-import land from "../engine/object/Land";
+// import ocean from "../engine/object/Ocean.js";
+// import land from "../engine/object/Land";
 import camera from "../engine/basic/Camera.js";
 import MasterScene from "../engine/scenes/MasterScene.js";
 import directionalLight, { ambientLight, helper, hemiLight } from "../engine/basic/Light.js";
@@ -14,17 +14,21 @@ import settings from '../characters/Maw/Settings.js'
 import settingsErica from '../characters/Erika/Settings.js'
 import cameraController from "../engine/controllers/camera/CameraController.js";
 import keyListener from "../engine/basic/KeyListener.js";
-import eventBus from "../engine/basic/EventBus.js";
+// import eventBus from "../engine/basic/EventBus.js";
 import sounds from "../audio/Audios.js";
 import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
-import gamePlay from "./GamePlay.js";
+// import gamePlay from "./GamePlay.js";
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController.js";
-import gamePlay2 from "./GamePlay2.js";
+// import gamePlay2 from "./GamePlay2.js";
 import erika from "../characters/Erika/Erika.js";
 import NPC from "./NPC.js";
 import directionWSSpaceController from "../engine/controllers/DirectionWSSpaceController.js";
 import skyTexture from "./SkyTexture.js";
+// import blend from "../engine/noise/Blend.js";
+// import ChunkManager from "../engine/noise/ChunkManager.js";
+import sphere from "../engine/object/Sphere.js";
+import gravity from "../engine/basic/Gravity.js";
 
 
 class Scene3 extends MasterScene {
@@ -51,7 +55,6 @@ class Scene3 extends MasterScene {
             if (this.mesh) {
                 camera.lookAt(this.mesh.position)
             }
-
         }
 
         let contextMenu = new ContextMenu(displayContextMenuGame)
@@ -81,25 +84,51 @@ class Scene3 extends MasterScene {
         erika.getObject().then(mesh => {
             this.mesh = mesh
             this.mesh.position.z = -12
+            setTimeout(() => {
+                this.mesh.position.z = -12
+                let data = gravity.check(mesh.position, sphere.children, 1)
+                if (data.isGrounded) {
+                    mesh.position.y += 1 - data.tmp.distance
+                }
+            }, 1000);
             scene.add(mesh)
             this.characterControllerErika = new CharacterController(settingsErica, directionWSSpaceController)
             this.characterControllerErika.setMesh(mesh)
             this.characterControllerErika.start()
-            displacementCamController.setSpeed(10)
+            displacementCamController.setSpeed(5)
             displacementCamController.setTarget(mesh)
             displacementCamController.start()
+            displacementCamController.setCallback(() => {
+                let data = gravity.check(mesh.position, sphere.children, 1)
+                if (data.isGrounded) {
+                    mesh.position.y += 1 - data.tmp.distance
+                }
+            })
+
             cameraController.start(mesh)
+
+            // blend.then(t => {
+            //     scene.add(sphere)
+            //     let chunkManager = new ChunkManager(sphere, 1000, t)
+            //     chunkManager.setCharacter(mesh)
+            // })
         })
 
         scene.background = skyTexture;
-        scene.add(land);
+
+
+
+        // scene.add(land);
 
         maw.getObject().then(mesh => {
             this.mesh2 = mesh
             scene.add(mesh)
-            this.mesh2.position.z = -7
             this.npc = new NPC(this.mesh2)
             this.npc.start()
+            setTimeout(() => {
+                this.mesh2.position.z = -4
+                this.mesh2.position.x = 0
+            }, 1000);
         })
     }
     close() {

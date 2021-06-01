@@ -27,7 +27,8 @@ let settings = {
                 state = 'up'
             }
             if (lastPressed(input, 83)) {
-                state = 'down'
+                // state = 'down'
+                state = 'idle'
             }
             return state
         }
@@ -36,10 +37,12 @@ let settings = {
         transition: (input) => {
             let state = 'up'
             if (lastPressed(input, 83)) {
-                return state = 'down'
+                return state = 'idle'
+                    // return state = 'down'
             }
             if (lastReleased(input, 87) && keyListener.isPressed(83)) {
-                return state = 'down'
+                return state = 'idle'
+                    // return state = 'down'
             }
             if (none()) {
                 return state = 'idle'

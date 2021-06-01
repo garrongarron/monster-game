@@ -1,6 +1,8 @@
 import camera from "../engine/basic/Camera"
+import gravity from "../engine/basic/Gravity"
 import machine from "../engine/basic/Machine"
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController"
+import sphere from "../engine/object/Sphere"
 import fadeHandler from "../engine/ui/FadeHandler"
 import cameraOrbitalController from "./CameraOrbitalController"
 import sceneHandlerObj from "./SceneHandlerObj"
@@ -49,9 +51,14 @@ class GamePlay {
         cameraOrbitalController.open()
         displacementCamController.setTarget(mesh)
         displacementCamController.start()
+        displacementCamController.setCallback(() => {
+            let data = gravity.check(mesh.position, sphere.children, 1)
+            if (data.isGrounded) {
+                mesh.position.y += 1 - data.tmp.distance
+            }
+        })
     }
     showMessage(time) {
-        console.log(this.messages);
         this.messageContainer.innerText = this.messages.shift()
         setTimeout(() => {
             this.messageContainer.innerText = ''

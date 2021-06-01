@@ -3,6 +3,8 @@ import eventBus from '../engine/basic/EventBus.js'
 import keyListener from '../engine/basic/KeyListener.js'
 import machine from '../engine/basic/Machine.js'
 import Animator from '../engine/characters/Animator.js'
+import gravity from '../engine/basic/Gravity'
+import sphere from '../engine/object/Sphere.js'
 class NPC {
     constructor(npc) {
         this.npc = npc
@@ -26,37 +28,44 @@ class NPC {
         this.credits.classList.add('credits')
     }
     showMessage(time) {
-        console.log(this.messages);
         this.messageContainer.innerText = this.messages.shift()
         setTimeout(() => {
             this.messageContainer.innerText = ''
         }, 1000 * time);
     }
     showCredits() {
-        document.body.appendChild(this.credits)
-        setTimeout(() => {
-            this.credits.classList.add('fadeIn')
-        }, 1000);
-    }
+            document.body.appendChild(this.credits)
+            setTimeout(() => {
+                this.credits.classList.add('fadeIn')
+            }, 1000);
+        }
+        //////////////////////////////////////////////////
     start() {
         this.animator.start()
         machine.addCallback(() => {
             if (this.flag) return
             this.npc.position.z += 0.03
+            let data = gravity.check(this.npc.position, sphere.children, 1)
+            if (data.isGrounded) {
+                this.npc.position.y += 1 - data.tmp.distance
+            }
         })
 
         let timer
         let shooted = false
         timer = setTimeout(() => {
-            shooted = true
-            this.messageContainer.innerText = this.messages.shift()
-            this.shoot()
+            console.log(this.messages.length);
+            if (this.messages.length == 3) {
+                shooted = true
+                this.messageContainer.innerText = this.messages.shift()
+            }
         }, 1000 * 15);
 
         document.body.addEventListener('keydown', (e) => {
-            if (shooted) return
             if (e.keyCode == 32) {
-                this.messages.shift()
+                if (!shooted) {
+                    this.messages.shift()
+                }
                 this.shoot()
                 clearTimeout(timer)
             }

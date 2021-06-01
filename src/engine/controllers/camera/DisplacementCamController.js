@@ -5,7 +5,7 @@ import keyListener from '../../basic/KeyListener.js'
 class DisplacementCamController {
     constructor() {
         this.target = null
-        this.speed = 50
+        this.speed = 35
         this.flag = false
         this.lastN = []
     }
@@ -40,40 +40,43 @@ class DisplacementCamController {
             this.emit()
         }
 
-        if (keyListener.isPressed(keyCode.s)) {
-            this.target.rotation.y = rotationWithGap2
-            this.target.position.x -= Math.sin(rotationWithGap2) *
-                this.speed * n
-            this.target.position.z -= Math.cos(rotationWithGap2) *
-                this.speed * n
-            this.emit()
-        }
+        // if (keyListener.isPressed(keyCode.s)) {
+        //     this.target.rotation.y = rotationWithGap2
+        //     this.target.position.x -= Math.sin(rotationWithGap2) *
+        //         this.speed * n
+        //     this.target.position.z -= Math.cos(rotationWithGap2) *
+        //         this.speed * n
+        //     this.emit()
+        // }
 
-        if (keyListener.isPressed(keyCode.a)) {
-            this.target.position.x +=
-                Math.sin(rotationWithGap2 + Math.PI * .5) *
-                this.speed * n
-            this.target.position.z +=
-                Math.cos(rotationWithGap2 + Math.PI * .5) *
-                this.speed * n
-            this.emit()
-        }
+        // if (keyListener.isPressed(keyCode.a)) {
+        //     this.target.position.x +=
+        //         Math.sin(rotationWithGap2 + Math.PI * .5) *
+        //         this.speed * n
+        //     this.target.position.z +=
+        //         Math.cos(rotationWithGap2 + Math.PI * .5) *
+        //         this.speed * n
+        //     this.emit()
+        // }
 
-        if (keyListener.isPressed(keyCode.d)) {
-            this.target.position.x +=
-                Math.sin(rotationWithGap2 - Math.PI * .5) *
-                this.speed * n
-            this.target.position.z +=
-                Math.cos(rotationWithGap2 - Math.PI * .5) *
-                this.speed * n
-            this.emit()
-        }
+        // if (keyListener.isPressed(keyCode.d)) {
+        //     this.target.position.x +=
+        //         Math.sin(rotationWithGap2 - Math.PI * .5) *
+        //         this.speed * n
+        //     this.target.position.z +=
+        //         Math.cos(rotationWithGap2 - Math.PI * .5) *
+        //         this.speed * n
+        //     this.emit()
+        // }
     }
 
     setTarget(target) {
         this.target = target
     }
 
+    setCallback(callback) {
+        this.callback = callback
+    }
     emit() {
         if (this.callback != null) {
             this.callback()

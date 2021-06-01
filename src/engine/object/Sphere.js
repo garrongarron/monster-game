@@ -6,7 +6,8 @@ const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
 sphere.castShadow = true; //default is false
 sphere.receiveShadow = true; //default
-sphere.position.y = 2
+sphere.position.y = -2
+sphere.position.z = -15
 
 
 export default sphere

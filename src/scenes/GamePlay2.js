@@ -21,8 +21,8 @@ class GamePlay2 {
     open(mesh) {
         this.mesh = mesh
         setTimeout(() => {
-            this.showMessage(4)
-        }, 1000);
+            this.showMessage(3)
+        }, 2000);
         setTimeout(() => {
             this.showMessage(6)
         }, 10000);
@@ -46,7 +46,6 @@ class GamePlay2 {
         }, 42000);
     }
     showMessage(time) {
-        console.log(this.messages);
         this.display.innerText = this.messages.shift()
         setTimeout(() => {
             this.display.innerText = ''

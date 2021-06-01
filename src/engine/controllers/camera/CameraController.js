@@ -18,7 +18,7 @@ class CameraController {
         this.cameraAngle = 30
         this.target = null
         this.callback = null
-
+        this.afterProcessCallback = null
         this.controller = () => {
             if (this.target) {
                 let angleRotation =
@@ -45,35 +45,46 @@ class CameraController {
                     z,
                     this.interpolation)
 
-                mouse.acumulated.y = MathUtils.clamp(mouse.acumulated.y, -380, 400)
+                mouse.acumulated.y = MathUtils.clamp(mouse.acumulated.y, -300, 400)
 
                 this.cameraAngle = mouse.acumulated.y / 400
 
-                camera.position.y = this.characterHeight +
+                camera.position.y = this.target.position.y + this.characterHeight +
                     this.cameraAngle
 
-                let opositeCamPosition = {
-                    position: {
-                        x: this.target.position.x +
-                            Math.sin(this.rotationWithGap) *
-                            this.radio,
-                        z: this.target.position.z +
-                            Math.cos(this.rotationWithGap) *
-                            this.radio
-                    }
-                }
-                camera.lookAt(
-                        opositeCamPosition.position.x,
-                        this.target.position.y - this.cameraAngle,
-                        opositeCamPosition.position.z)
+                this.lookAtTarget()
                     /* camera.lookAt(
                         this.target.position.x, 
                         this.target.position.y, 
                         this.target.position.z)
                     */
                     // displacementCamController.run(rotationWithGap2)
+                if (this.afterProcessCallback != null) {
+                    this.afterProcessCallback(this)
+                }
             }
         }
+    }
+
+    lookAtTarget() {
+        let opositeCamPosition = {
+            position: {
+                x: this.target.position.x +
+                    Math.sin(this.rotationWithGap) *
+                    this.radio,
+                z: this.target.position.z +
+                    Math.cos(this.rotationWithGap) *
+                    this.radio
+            }
+        }
+        camera.lookAt(
+            opositeCamPosition.position.x,
+            this.target.position.y - this.cameraAngle,
+            opositeCamPosition.position.z)
+    }
+
+    setAfterProcessCallback(afterProcessCallback) {
+        this.afterProcessCallback = afterProcessCallback
     }
 
     start(t) {

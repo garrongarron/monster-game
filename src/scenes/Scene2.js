@@ -17,11 +17,13 @@ import eventBus from "../engine/basic/EventBus.js";
 import sounds from "../audio/Audios.js";
 import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
-import gamePlay from "./GamePlay.js";
+// import gamePlay from "./GamePlay.js";
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController.js";
 import gamePlay2 from "./GamePlay2.js";
 import directionWSController from "../engine/controllers/DirectionWSController.js";
 import skyTexture from "./SkyTexture.js";
+import gravity from "../engine/basic/Gravity.js";
+import sphere from "../engine/object/Sphere.js";
 
 class Scene2 extends MasterScene {
     constructor(instancename) {
@@ -74,6 +76,14 @@ class Scene2 extends MasterScene {
             .then(mesh => {
                 this.mesh = mesh
                 cameraController.start(mesh)
+                cameraController.setAfterProcessCallback((obj) => {
+                    let data = gravity.check(camera.position, sphere.children, 1)
+                    if (data.isGrounded && data.tmp.distance < 1) {
+                        camera.position.y += 1.05 - data.tmp.distance
+                        obj.lookAtTarget()
+                    }
+                })
+                camera.position.y = this.mesh.position.y + 1
                 gamePlay2.open(mesh)
                 scene.add(mesh)
                 this.characterController = new CharacterController(settings, directionWSController)
@@ -81,10 +91,11 @@ class Scene2 extends MasterScene {
                 this.characterController.start()
                 displacementCamController.setTarget(mesh)
                 displacementCamController.start()
+                displacementCamController.setSpeed(20)
             })
-        scene.add(land)
+            // scene.add(land)
         eventBus.suscribe('keyListener', (arr) => {
-            if (this.openFlag && (arr[0] == 87 || arr[0] == 83)) {
+            if (this.openFlag && (arr[0] == 87)) {
                 (arr[1] == true) ? sounds.play('walk'): sounds.stop('walk', true)
             }
         })
@@ -99,6 +110,7 @@ class Scene2 extends MasterScene {
         scene.remove(ambientLight)
         scene.remove(hemiLight)
         scene.remove(cube)
+        this.mesh.position.set(0, -.22, -10)
     }
 }
 

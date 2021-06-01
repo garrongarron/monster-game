@@ -10,7 +10,7 @@ let normalActions = {
         loop: false
     },
     'down': {
-        id: '34',
+        id: '20',
         timeScale: 1,
         loop: false
     },
