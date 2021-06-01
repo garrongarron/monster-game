@@ -19,6 +19,7 @@ import ContextMenu from '../engine/ui/ContextMenu.js'
 import displayContextMenuGame from "./DisplayContextMenuGame.js";
 import gamePlay from "./GamePlay.js";
 import directionWSController from "../engine/controllers/DirectionWSController.js";
+import skyTexture from "./SkyTexture.js";
 
 class Demo extends MasterScene {
     constructor(instancename) {
@@ -65,7 +66,7 @@ class Demo extends MasterScene {
         cube2.position.z = 14
         cube2.position.x = -.5
 
-
+        scene.background = skyTexture;
         maw.getObject()
             .then(mesh => {
                 this.mesh = mesh

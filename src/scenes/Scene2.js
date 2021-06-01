@@ -21,6 +21,7 @@ import gamePlay from "./GamePlay.js";
 import displacementCamController from "../engine/controllers/camera/DisplacementCamController.js";
 import gamePlay2 from "./GamePlay2.js";
 import directionWSController from "../engine/controllers/DirectionWSController.js";
+import skyTexture from "./SkyTexture.js";
 
 class Scene2 extends MasterScene {
     constructor(instancename) {
@@ -68,7 +69,7 @@ class Scene2 extends MasterScene {
         cube2.position.z = 14
         cube2.position.x = -.5
 
-
+        scene.background = skyTexture;
         maw.getObject()
             .then(mesh => {
                 this.mesh = mesh

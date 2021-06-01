@@ -8,7 +8,7 @@ import { MathUtils } from 'three'
 
 class CameraController {
     constructor() {
-        this.interpolation = .8
+        this.interpolation = .5
         this.rotation = 0
         this.gap = 10
         this.rotationWithGap = 0

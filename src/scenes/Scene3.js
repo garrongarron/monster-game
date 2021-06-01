@@ -24,6 +24,8 @@ import gamePlay2 from "./GamePlay2.js";
 import erika from "../characters/Erika/Erika.js";
 import NPC from "./NPC.js";
 import directionWSSpaceController from "../engine/controllers/DirectionWSSpaceController.js";
+import skyTexture from "./SkyTexture.js";
+
 
 class Scene3 extends MasterScene {
     constructor(instancename) {
@@ -89,6 +91,7 @@ class Scene3 extends MasterScene {
             cameraController.start(mesh)
         })
 
+        scene.background = skyTexture;
         scene.add(land);
 
         maw.getObject().then(mesh => {
